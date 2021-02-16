@@ -1,0 +1,66 @@
+body, html,.App {
+  margin: 0; 
+  padding: 0;
+  background:#363636;
+  color:#fff;
+}
+a, p, h1, h2, h3, h4, h5{
+  color:#fff;
+}
+
+ul, li{
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.center{
+  margin:3vh 0;
+  display: flex;
+  align-items:center;
+  justify-content:center
+}
+
+.__main img{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  box-sizing: border-box;
+}
+
+.grid-section .grid-list li{
+  width:100%;
+  /* border: 1px solid white; */
+  box-sizing: border-box;
+}
+
+.grid-list{
+  padding: 0 6vw;
+  width: 100%;
+}
+.clfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.grid-list li{
+  padding: 1rem;
+}
+
+.grid-card img{
+  border-radius: 1rem;
+}
+
+
+@media all and (min-width:768px){
+  .grid-section .grid-list li{
+    float:left;
+    width:50%;
+    }  
+}
+
+@media all and (min-width:1132px){
+  .grid-section .grid-list li{
+    width:25%;
+    }   
+}
