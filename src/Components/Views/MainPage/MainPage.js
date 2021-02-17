@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { API_KEY, BASE_URL, IMAGE_BASE_URL } from '../../../Config/Key'
 import Axios from 'axios'
-import $ from 'jquery';
 
 import GridCards from '../Commons/GridCards'
+import MainMovieImage from '../Commons/MainMovieImage'
+import SearchIcon from '../Commons/SearchIcon'
 
 function MainPage() {
 
     const [Movies, setMovies] = useState([])
-    const [MainImage, setMainImage] = useState()
+    const [MainImage, setMainImage] = useState([])
     const [CurrentPage, setCurrentPage] = useState(0)
 
 
@@ -17,6 +18,7 @@ function MainPage() {
 
         getMovies(API_URL)
 
+        //console.log(`이미지패스: ${IMAGE_BASE_URL}w1280${MainImage}`)
     }, [])
 
 
@@ -35,12 +37,21 @@ function MainPage() {
             //console.log('currentPage: ' + page)
 
             setMovies([...Movies, ...results])
-            setCurrentPage(page)
 
             if (CurrentPage === 0) {
                 //first load
-                setMainImage(results[0])
+                //console.log(CurrentPage)
+                //console.log(results[0].backdrop_path)
+                setMainImage(
+                    [
+                        results[0].backdrop_path,
+                        results[0].original_title,
+                        results[0].overview
+                    ]
+                )
             }
+
+            setCurrentPage(page)
 
         } catch (err) {
             //Error
@@ -50,7 +61,7 @@ function MainPage() {
     }
 
 
-    //Scroll Event
+    // //Scroll Event
     // document.addEventListener('scroll', function () {
     //     const API_URL = `${BASE_URL}movie/popular?api_key=${API_KEY}&language=ko-KR&page=${CurrentPage + 1}`;
 
@@ -61,14 +72,14 @@ function MainPage() {
     //         document.body.clientHeight, document.documentElement.clientHeight
     //     );
 
-    //     if (currentScroll >= height) {
-    //         console.log('currentScrollValue is ' + currentScroll + ' / max: ' + height);
+    //     console.log('currentScrollValue is ' + currentScroll + ' / max: ' + height);
+    //     if (currentScroll >= height - 10) {
 
     //         getMovies(API_URL)
     //     }
     // });
 
-
+    //Button Event
     const loadMore = () => {
         const API_URL = `${BASE_URL}movie/popular?api_key=${API_KEY}&language=ko-KR&page=${CurrentPage + 1}`;
 
@@ -77,17 +88,32 @@ function MainPage() {
 
 
 
-
     return (
         <div className="wrap">
-            <header className="center">
+            {/* <header className="center">
                 <h1>MainPage</h1>
-            </header>
-            <article className="__main">
-                <img src="" alt="" />
-            </article>
+            </header> */}
+
+            <MainMovieImage
+                image={`${IMAGE_BASE_URL}w1280${MainImage[0]}`}
+                title={MainImage[1]}
+                text={MainImage[2]}
+            />
+
+
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
 
             <section className="grid-section">
+
+                <div className="menu">
+                </div>
+
                 <ul className="grid-list clfix">
                     {Movies && Movies.map((movie, index) => (
                         <GridCards
@@ -103,11 +129,13 @@ function MainPage() {
                 </ul>
             </section>
 
+            <SearchIcon />
+
             <footer className="center">
-                <button onClick={loadMore}>Load More ...</button>
+                <button onClick={loadMore} className="btn">더 보기</button>
             </footer>
 
-        </div>
+        </div >
     )
 }
 

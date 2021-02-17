@@ -4,6 +4,7 @@ import './App.css'
 import { Route, Switch } from 'react-router-dom'
 import MainPage from './Views/MainPage/MainPage'
 import DetailPage from './Views/DetailPage/DetailPage'
+import SearchPage from './Views/SearchPage/SearchPage'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={MainPage} />
           <Route exact path="/movie/:movieId" component={DetailPage} />
+          <Route exact path="/search" component={SearchPage} />
         </Switch>
 
       </div>
