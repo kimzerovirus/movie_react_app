@@ -102,14 +102,9 @@ function MainPage() {
 
 
 
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
 
 
-            <section className="grid-section">
+            <section className="grid-section mt">
 
                 <div className="menu">
                 </div>

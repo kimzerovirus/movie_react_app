@@ -1,0 +1,54 @@
+
+
+.table{
+    width: 100%;
+    padding: 5vw 10vw;
+    box-sizing: border-box;
+}
+
+.tr{
+    width: 50%;
+    float: left;
+    /* background: green; */
+}
+
+.td, .th{
+    box-shadow: 
+    2px 0 0 0 #888, 
+    0 2px 0 0 #888, 
+    2px 2px 0 0 #888,
+    2px 0 0 0 #888 inset, 
+    0 2px 0 0 #888 inset;
+    box-sizing: border-box;
+    float: left;
+    height: 10vh;
+    line-height: 10vh;
+    overflow:hidden;
+}
+.td{
+    width: 70%;
+    padding-left: 1rem;
+}
+.th{
+    width: 30%;
+    text-align: center;
+}
+
+
+/* mobile Only */
+@media all and (max-width:767px){
+    .tr{
+        width: 100%;
+    }
+    .table{
+        padding: 7vw 2vw;
+    }
+}
+
+/* tablet & PC */
+@media all and (min-width:768px){
+}
+
+/* PC */
+@media all and (min-width:1280px){
+}

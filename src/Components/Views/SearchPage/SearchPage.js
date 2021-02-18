@@ -68,7 +68,7 @@ function SearchPage({ history }) {
             </div>
             <div className="center">
                 <input type="text" onChange={onSearchItemHandler} />
-                <button onClick={onSubmitHandler}>검색</button>
+                <button onClick={onSubmitHandler} className="btn-search">검색</button>
             </div>
 
             <section className="grid-section">
@@ -99,7 +99,7 @@ function SearchPage({ history }) {
                     <img src={`${process.env.PUBLIC_URL}/search_back.svg`} alt="" />
                 </a>
             </div>
-        </div>
+        </div >
     )
 }
 

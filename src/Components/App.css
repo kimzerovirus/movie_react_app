@@ -8,7 +8,7 @@ body, html,.App {
   background:#363636;
   color:#fff;
 }
-a, p, h1, h2, h3, h4, h5, button{
+a, p, h1, h2, h3, h4, h5, div, button{
   color:#fff;
   font-family: 'Montserrat','Jua', sans-serif;
 }
@@ -30,6 +30,26 @@ hr{
   border-radius: 8px;
   cursor: pointer;
 }
+.btn-search{
+  background:#13AA52;
+  border:none;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 60px;
+  padding: 1rem;
+}
+input{
+  border:none;
+  outline:none;
+  width: 60vw;
+  max-width:360px;
+  padding: 1rem;
+}
+input:focus{
+  outline:none;
+  border:none;
+}
+
 button:focus{
   border:none;
   outline:none;
@@ -42,6 +62,9 @@ button:focus{
 }
 
 .__main{
+  width: 100%;
+}
+.overflow{
   width: 100%;
   overflow: hidden;
 }
@@ -131,7 +154,7 @@ button:focus{
   .grid-img-size{
     height: 30vh;
   }
-  .__main{
+  .__main, .overflow{
     height: 300px;
     position: relative;
   }
@@ -142,7 +165,7 @@ button:focus{
     display: none;
   }
   .__main-tit{
-    top:300px;
+    top:250px;
   }
 }
 
@@ -160,13 +183,15 @@ button:focus{
     padding: 1rem;
   }
     
-  .__main{
+  .overflow{
     height: 500px;
   }
   .__img:after{
     height: 500px;
   }
-
+  .mt{
+    margin-top: 5rem;
+  }
 }
 
 /* PC Only */

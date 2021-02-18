@@ -3,7 +3,8 @@ import { API_KEY, BASE_URL, IMAGE_BASE_URL } from '../../../Config/Key'
 import Axios from 'axios'
 
 import MainMovieImage from '../Commons/MainMovieImage'
-import SearchIcon from '../Commons/SearchIcon'
+import DetailData from './DetailData'
+import './table.css'
 
 function DetailPage(props) {
 
@@ -42,10 +43,11 @@ function DetailPage(props) {
                 image={`${IMAGE_BASE_URL}w1280${Movie.backdrop_path}`}
                 title={Movie.original_title}
                 text={Movie.overview}
+                movie={Movie}
                 detail
             />
 
-            {/* <SearchIcon /> */}
+            {/* <DetailData movie={Movie} /> */}
 
             <div className="search-icon" onClick={goBack}>
                 <a>
