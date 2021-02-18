@@ -9,19 +9,45 @@ function SearchPage({ history }) {
 
     const [SearchItem, setSearchItem] = useState("")
     const [Movie, setMovie] = useState([])
-    console.log(SearchItem)
+    const [SearchResult, setSearchResult] = useState(false)
+    //console.log(SearchItem)
 
     //https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false => movie쿼리 필요
 
     let URL = `${BASE_URL}search/movie?query=${SearchItem}&api_key=${API_KEY}&language=ko-KR&page=1&include_adult=false`
 
     useEffect(() => {
+        if (window.localStorage.searchItem) {
+            //alert('localstorage_data')
+            const output = localStorage.getItem("searchItem");
+            // alert(output)
+            // alert('item: ' + SearchItem)
+            // loadLocalStorage(output)
+            // setSearchItem(output)
+            URL = `${BASE_URL}search/movie?query=${output}&api_key=${API_KEY}&language=ko-KR&page=1&include_adult=false`
+
+            // alert('load')
+            getMovies(URL)
+        }
+
         if (SearchItem !== '') {
-            console.log('hi')
+            //console.log('hi')
             getMovies(URL)
         }
     }, [])
 
+
+    //Set LocalStorage
+    const setLocalStorage = () => {
+        window.localStorage.setItem('searchItem', SearchItem)
+        console.log('setItem')
+    }
+
+    //Remove LocalStorage
+    const removeLocalStorage = () => {
+        window.localStorage.removeItem("searchItem")
+        //console.log('removeItem')
+    }
 
     //Back
     const goBack = () => {
@@ -34,9 +60,20 @@ function SearchPage({ history }) {
             .then(res => {
                 try {
                     //api_DATA => state
-                    console.log(res.data.results)
+                    //console.log(res.data.results)
                     setMovie(res.data.results)
-                    console.log(Movie)
+
+                    //스토리지 저장
+                    if (SearchItem !== '') {
+                        setLocalStorage()
+                    }
+
+                    if (res.data.results.length === 0) {
+                        setSearchResult(true)
+                    } else {
+                        setSearchResult(false)
+                    }
+
                 } catch (err) {
                     alert(`state_error: ${err}`)
                 }
@@ -46,8 +83,12 @@ function SearchPage({ history }) {
 
     //Input Event
     const onSearchItemHandler = (e) => {
+        //입력시 스토리지 삭제
+        if (window.localStorage.searchItem) {
+            removeLocalStorage()
+            //alert('remove')
+        }
         setSearchItem(e.currentTarget.value)
-
     }
 
     //Submit Event
@@ -61,13 +102,17 @@ function SearchPage({ history }) {
 
     }
 
+    const inputHandler = (e) => {
+        e.currentTarget.value = ''
+    }
+
     return (
         <div>
             <div className="center">
                 <h1>찾는 영화가 있으신가요?</h1>
             </div>
             <div className="center">
-                <input type="text" onChange={onSearchItemHandler} />
+                <input type="text" onChange={onSearchItemHandler} onClick={inputHandler} />
                 <button onClick={onSubmitHandler} className="btn-search">검색</button>
             </div>
 
@@ -89,6 +134,10 @@ function SearchPage({ history }) {
                         />
                     ))}
                 </ul>
+
+                {SearchResult ? (<div className="center"><h5>검색결과가 없습니다.</h5></div>) : (null)}
+
+
             </section>
 
 

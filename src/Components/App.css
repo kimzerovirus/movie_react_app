@@ -70,6 +70,8 @@ button:focus{
 }
 .__main-tit{
   position: absolute;
+  box-sizing: border-box;
+  width: 100%;
   z-index: 5000;
   top:400px;
   padding: 0 7vw;

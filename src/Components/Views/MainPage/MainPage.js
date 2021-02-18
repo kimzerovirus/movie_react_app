@@ -19,6 +19,11 @@ function MainPage() {
         getMovies(API_URL)
 
         //console.log(`이미지패스: ${IMAGE_BASE_URL}w1280${MainImage}`)
+
+        if (window.localStorage.searchItem) {
+            window.localStorage.removeItem("searchItem")
+        }
+
     }, [])
 
 
