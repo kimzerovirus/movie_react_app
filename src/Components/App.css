@@ -174,7 +174,7 @@ button:focus{
 /* tablet & PC */
 @media all and (min-width:768px){
   .grid-img-size{
-    height: 60vh;
+    height: 55vh;
   }
 
   .grid-section .grid-list li{
@@ -192,7 +192,15 @@ button:focus{
     height: 500px;
   }
   .mt{
-    margin-top: 5rem;
+    margin-top: 6rem;
+  }
+
+  .grid-list{
+    padding: 0 10vw;
+    width: 100%;
+  }
+  .__main-tit{
+    padding: 0 12vw
   }
 }
 
