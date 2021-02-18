@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import './App.css'
 
-import { Route, Switch } from 'react-router-dom'
+import { Route, BrowserRouter } from 'react-router-dom'
 import MainPage from './Views/MainPage/MainPage'
 import DetailPage from './Views/DetailPage/DetailPage'
 import SearchPage from './Views/SearchPage/SearchPage'
@@ -21,11 +21,11 @@ function App() {
     <Suspense fallback={(<div>Loading ... Please Wait..</div>)}>
       <div className="App">
 
-        <Switch>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Route exact path="/" component={MainPage} />
           <Route exact path="/movie/:movieId" component={DetailPage} />
           <Route exact path="/search" component={SearchPage} />
-        </Switch>
+        </BrowserRouter>
 
       </div>
     </Suspense>
