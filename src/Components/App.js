@@ -23,8 +23,8 @@ function App() {
 
         <Switch>
           <Route exact path="http://kimzerovirus.github.io/movie_react_app/" component={MainPage} />
-          <Route exact path="/movie/:movieId" component={DetailPage} />
-          <Route exact path="/search" component={SearchPage} />
+          <Route exact path="http://kimzerovirus.github.io/movie_react_app/movie/:movieId" component={DetailPage} />
+          <Route exact path="http://kimzerovirus.github.io/movie_react_app/search" component={SearchPage} />
         </Switch>
 
       </div>
