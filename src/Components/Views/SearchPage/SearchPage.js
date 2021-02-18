@@ -102,6 +102,13 @@ function SearchPage({ history }) {
 
     }
 
+    //Enter Event
+    const onKeyPressHandler = (e) => {
+        if (e.key === "Enter") {
+            onSubmitHandler()
+        }
+    }
+
     const inputHandler = (e) => {
         e.currentTarget.value = ''
     }
@@ -112,7 +119,7 @@ function SearchPage({ history }) {
                 <h1>찾는 영화가 있으신가요?</h1>
             </div>
             <div className="center">
-                <input type="text" onChange={onSearchItemHandler} onClick={inputHandler} />
+                <input type="text" onChange={onSearchItemHandler} onClick={inputHandler} onKeyPress={onKeyPressHandler} />
                 <button onClick={onSubmitHandler} className="btn-search">검색</button>
             </div>
 
