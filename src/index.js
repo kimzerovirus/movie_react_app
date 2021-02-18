@@ -4,7 +4,7 @@ import App from './Components/App';
 import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.render(
-  <BrowserRouter basename="/movie_react_app">
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <App />
   </BrowserRouter>
   , document.getElementById('root')
