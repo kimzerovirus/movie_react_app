@@ -2,7 +2,9 @@
 The Movie DataBase Api를 Axios로 받은 후 리액트로 데이터를 보여주는 간단한 사이트입니다.
 페이지 구성은 메인페이지와 각 영화의 세부페이지 그리고 영화 검색페이지로 이루어져 있습니다.
 
-# React React-Router Axios
+React React-Router Axios
+
+작업기간 2021-02-16 ~ 2021-02-19
 
 2021-02-16
 Scroll이벤트로 데이터를 불러오려고 했으나 5페이지 부터 로드시 오류가 발생하여 버튼으로 교체함
