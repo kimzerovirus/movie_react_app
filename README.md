@@ -5,6 +5,10 @@
 
 <br>
 
+[🎬movie_react_app 보러가기](https://kimzerovirus.github.io/movie_react_app/)
+
+<br>
+
 ### 📚 기술스택
 
 | 분야           | 사용 기술                               |  작업기간                |
