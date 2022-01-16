@@ -1,28 +1,27 @@
 import React from 'react';
 
-interface MovieState {
+//style
+import { MainImage, Wrapper } from './MainMovieImage.style';
+
+interface MovieState extends MainImageProps {
 	title: string;
 	text: string;
+}
+
+export interface MainImageProps {
 	image: string;
 }
 
 const MainMovieImage = (props: MovieState) => {
 	return (
-		<div>
-			<article className="__main clfix">
-				<div className="overflow clfix">
-					<div
-						className="__img clfix"
-						style={{ backgroundImage: `url(${props.image})` }}
-					></div>
-				</div>
-
-				<div className="__main-tit">
+		<Wrapper>
+			<MainImage image={props.image}>
+				<div className="container">
 					<h2>{props.title}</h2>
 					{props.text ? <p>{props.text}</p> : <p>영화 설명 정보가 없습니다</p>}
 				</div>
-			</article>
-		</div>
+			</MainImage>
+		</Wrapper>
 	);
 };
 

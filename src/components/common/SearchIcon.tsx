@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+//style
+import { SearchWrapper } from './SearchIcon.style';
+
 const SearchIcon = () => {
 	return (
-		<div className="search-icon">
+		<SearchWrapper>
 			<Link to="/search">
-				<img src={`${process.env.PUBLIC_URL}/search_icon.svg`} alt="" />
+				<i className="fas fa-search"></i>
 			</Link>
-		</div>
+		</SearchWrapper>
 	);
 };
 

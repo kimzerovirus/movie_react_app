@@ -7,6 +7,10 @@ import { fetchByTitle, IMAGE_BASE_URL } from '../../api';
 //components
 import GridCards from '../common/GridCards';
 
+//style
+import { SearchPageWrapper, SearchForm } from './SearchPage.style';
+import { GridList } from '../MainPage/MainPage.style';
+
 //types
 import { TmdbItems } from '../../api';
 
@@ -46,16 +50,14 @@ const SearchPage = () => {
 		//console.log('removeItem')
 	};
 
-	//Back
-	const goBack = () => {
-		navigate(-1);
-	};
+	// //Back
+	// const goBack = () => {
+	// 	navigate(-1);
+	// };
 
 	//API_CALL
 	const getMovies = async (movieName: string) => {
 		try {
-			//api_DATA => state
-			//console.log(res.data.results)
 			const { data } = await fetchByTitle(movieName);
 			setMovie(data.results);
 
@@ -64,11 +66,7 @@ const SearchPage = () => {
 				setLocalStorage();
 			}
 
-			if (data.results.length === 0) {
-				setSearchResult(true);
-			} else {
-				setSearchResult(false);
-			}
+			setSearchResult(true);
 		} catch (err) {
 			alert(`api_call_error: ${err}`);
 			return false;
@@ -76,7 +74,7 @@ const SearchPage = () => {
 	};
 
 	//Input Event
-	const onSearchItemHandler = (e: any) => {
+	const onSearchItemHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		//입력시 스토리지 삭제
 		if (window.localStorage.searchItem) {
 			removeLocalStorage();
@@ -96,66 +94,50 @@ const SearchPage = () => {
 	};
 
 	//Enter Event
-	const onKeyPressHandler = (e: any) => {
+	const onKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			onSubmitHandler();
 		}
 	};
 
-	const inputHandler = (e: any) => {
-		e.currentTarget.value = '';
-	};
+	// const inputHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+	// 	e.currentTarget.value = '';
+	// };
 
 	return (
-		<div>
-			<div className="center">
-				<h1>찾는 영화가 있으신가요?</h1>
-			</div>
-			<div className="center">
+		<SearchPageWrapper>
+			<h1>찾는 영화가 있으신가요?</h1>
+			<SearchForm>
 				<input
 					type="text"
+					value={SearchItem}
 					onChange={onSearchItemHandler}
-					onClick={inputHandler}
+					// onClick={inputHandler}
 					onKeyPress={onKeyPressHandler}
 				/>
-				<button onClick={onSubmitHandler} className="btn-search">
-					검색
-				</button>
-			</div>
-
-			<section className="grid-section">
-				<div className="menu"></div>
-
-				<ul className="grid-list clfix">
-					{Movie &&
-						Movie.map((movie, index) => (
-							<GridCards
-								key={index}
-								landingPage
-								image={
-									movie.poster_path
-										? `${IMAGE_BASE_URL}w500${movie.poster_path}`
-										: null
-								}
-								movieId={movie.id}
-								movieName={movie.original_title}
-							/>
-						))}
-				</ul>
-
-				{SearchResult ? (
-					<div className="center">
-						<h5>검색결과가 없습니다.</h5>
-					</div>
-				) : null}
-			</section>
-
-			<div className="search-icon" onClick={goBack}>
-				<a>
-					<img src={`${process.env.PUBLIC_URL}/search_back.svg`} alt="" />
-				</a>
-			</div>
-		</div>
+				<button onClick={onSubmitHandler}>검색</button>
+			</SearchForm>
+			{SearchResult ? (
+				<>
+					<GridList className="container">
+						{Movie &&
+							Movie.map((movie, index) => (
+								<GridCards
+									key={index}
+									image={
+										movie.poster_path
+											? `${IMAGE_BASE_URL}w500${movie.poster_path}`
+											: null
+									}
+									movieId={movie.id}
+									movieName={movie.original_title}
+								/>
+							))}
+					</GridList>
+					{Movie.length === 0 ? <h2>검색결과가 없습니다.</h2> : null}
+				</>
+			) : null}
+		</SearchPageWrapper>
 	);
 };
 

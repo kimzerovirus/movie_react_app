@@ -9,21 +9,13 @@ import DetailData from './DetailData';
 import { IMAGE_BASE_URL, fetchById } from '../../api';
 
 //type
-interface MovieState {
-	backdrop_path: string;
-	original_title: string;
-	overview: string;
-}
+import { TmdbMovieInfo } from '../../api';
 
 const DetailPage = () => {
 	const navigate = useNavigate();
 	const { movieId } = useParams() as { movieId: string }; // string | undefined
 
-	const [Movie, setMovie] = useState<MovieState>({
-		backdrop_path: '',
-		original_title: '',
-		overview: '',
-	});
+	const [Movie, setMovie] = useState<TmdbMovieInfo>({} as TmdbMovieInfo);
 
 	useEffect(() => {
 		getMovies(movieId);
@@ -52,7 +44,7 @@ const DetailPage = () => {
 				text={Movie.overview}
 			/>
 
-			<DetailData movie={Movie} />
+			<DetailData data={Movie} />
 
 			<div className="search-icon" onClick={goBack}>
 				<a>
