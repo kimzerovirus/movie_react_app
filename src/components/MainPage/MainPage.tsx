@@ -5,10 +5,14 @@ import { IMAGE_BASE_URL, fetchList } from '../../api';
 import GridCards from '../common/GridCards';
 import MainMovieImage from '../common/MainMovieImage';
 import SearchIcon from '../common/SearchIcon';
+import Spinner from '../common/Spinner';
+
+//style
+import { Wrapper, GridList } from './MainPage.style';
 
 //types
 import { TmdbItems } from '../../api';
-interface ISate {
+interface IState {
 	imagePath: string;
 	title: string;
 	overview: string;
@@ -16,11 +20,7 @@ interface ISate {
 
 const MainPage = () => {
 	const [Movies, setMovies] = useState<TmdbItems[]>([]);
-	const [MainImage, setMainImage] = useState<ISate>({
-		imagePath: '',
-		title: '',
-		overview: '',
-	});
+	const [MainImage, setMainImage] = useState<IState>({} as IState);
 	const [CurrentPage, setCurrentPage] = useState(0);
 
 	useEffect(() => {
@@ -60,34 +60,28 @@ const MainPage = () => {
 	};
 
 	return (
-		<div className="wrap">
+		<Wrapper>
 			<MainMovieImage
 				image={`${IMAGE_BASE_URL}w1280${MainImage.imagePath}`}
 				title={MainImage.title}
 				text={MainImage.overview}
 			/>
 
-			<section className="grid-section mt">
-				<div className="menu"></div>
-
-				<ul className="grid-list clfix">
-					{Movies &&
-						Movies.map((movie, index) => (
-							<GridCards
-								key={index}
-								landingPage
-								image={
-									movie.poster_path
-										? `${IMAGE_BASE_URL}w500${movie.poster_path}`
-										: null
-								}
-								movieId={movie.id}
-								movieName={movie.original_title}
-							/>
-						))}
-				</ul>
-			</section>
-
+			<GridList className="container">
+				{Movies &&
+					Movies.map((movie, index) => (
+						<GridCards
+							key={index}
+							image={
+								movie.poster_path
+									? `${IMAGE_BASE_URL}w500${movie.poster_path}`
+									: null
+							}
+							movieId={movie.id}
+							movieName={movie.original_title}
+						/>
+					))}
+			</GridList>
 			<SearchIcon />
 
 			<footer className="center">
@@ -95,7 +89,8 @@ const MainPage = () => {
 					더 보기
 				</button>
 			</footer>
-		</div>
+			<Spinner />
+		</Wrapper>
 	);
 };
 

@@ -31,7 +31,7 @@ export interface TmdbList {
 	};
 }
 
-interface TmdbInfo extends TmdbItems {
+export interface TmdbMovieInfo extends TmdbItems {
 	imdb_id: string;
 	belongs_to_collection: object;
 	budget: number;
@@ -45,7 +45,7 @@ interface TmdbInfo extends TmdbItems {
 }
 
 export interface TmdbMovieInfos {
-	data: TmdbInfo;
+	data: TmdbMovieInfo;
 }
 
 // list
@@ -69,7 +69,6 @@ export const fetchByTitle = (payload: string): Promise<TmdbList> => {
 	);
 };
 
-// searchByTitle
 //https://api.themoviedb.org/3/search/movie?query=hello&api_key=550e09f5c58bb2c7223f308a2417476d&language=ko-KR&page=1&include_adult=false`;
 //https://api.themoviedb.org/3/movie/438695?api_key=550e09f5c58bb2c7223f308a2417476d&language=ko-KR
 //https://api.themoviedb.org/3/movie/popular?api_key=550e09f5c58bb2c7223f308a2417476d&language=ko-KR&page=1

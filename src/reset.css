@@ -1,5 +1,54 @@
-*{ margin: 0; padding: 0; }
-ul,ol,li{ list-style: none; }
-a{ text-decoration: none;color: inherit; }
-table{ border-collapse: collapse; }
-button{ border:none; background-color: inherit;}
+@charset "utf-8";
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Roboto&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-family: "Roboto", "Nanum Gothic", sans-serif;
+}
+body {
+  background: #363636;
+}
+ul,
+ol,
+li {
+  list-style: none;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+table {
+  border-collapse: collapse;
+}
+button {
+  border: none;
+  background-color: inherit;
+}
+input {
+  border: none;
+  outline: none;
+}
+input:focus {
+  outline: none;
+  border: none;
+}
+button:focus {
+  border: none;
+  outline: none;
+}
+
+/* common */
+.container {
+  width: 90%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.clfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}
