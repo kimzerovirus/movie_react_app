@@ -41,7 +41,7 @@ const SearchPage = () => {
 	//Set LocalStorage
 	const setLocalStorage = () => {
 		window.localStorage.setItem('searchItem', SearchItem);
-		console.log('setItem');
+		// console.log('setItem');
 	};
 
 	//Remove LocalStorage

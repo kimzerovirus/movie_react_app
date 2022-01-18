@@ -26,7 +26,7 @@ const MainPage = () => {
 	const [CurrentPage, setCurrentPage] = useState(1);
 
 	useEffect(() => {
-		console.log(CurrentPage);
+		// console.log(CurrentPage);
 		getMovies();
 
 		if (window.localStorage.searchItem) {
@@ -53,7 +53,7 @@ const MainPage = () => {
 			const {
 				data: { page, results },
 			} = await fetchList(CurrentPage);
-			console.log('page' + page, results);
+			// console.log('page' + page, results);
 			setMovies([...Movies, ...results]);
 			if (CurrentPage === 1) {
 				setMainImage({
@@ -78,7 +78,7 @@ const MainPage = () => {
 	const observerTrigger = new IntersectionObserver(
 		(entries: IntersectionObserverEntry[]) => {
 			if (entries[0].isIntersecting) {
-				console.log('trigger');
+				// console.log('trigger');
 				setCurrentPage(page => page + 1);
 			}
 		},
