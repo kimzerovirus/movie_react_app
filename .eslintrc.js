@@ -7,16 +7,16 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 	],
 	rules: {
-		'@typescript-eslint/no-inferrable-types': 'off', // Closed type inference 자동으로 추론 할 수 있는 것도 명시적으로 표하게할 수 있게함
+		'@typescript-eslint/no-inferrable-types': 'off',
 		'prettier/prettier': [
 			'error',
 			{
-				singleQuote: true, // 작은 따옴표
-				semi: true, // 세미콜론
+				singleQuote: true,
+				semi: true,
 				useTabs: true,
 				tabWidth: 2,
 				trailingComma: 'all',
-				printWidth: 80, // 80자 마다 개행
+				printWidth: 80,
 				bracketSpacing: true,
 				arrowParens: 'avoid',
 				endOfLine: 'auto',

@@ -16,11 +16,7 @@ const GridCards = (props: PropsState) => {
 			<GridCard>
 				{/* <Link to={`${process.env.PUBLIC_URL}/movie/${props.movieId}`} > */}
 				<Link to={`/movie/${props.movieId}`}>
-					<img
-						className="grid-img-size"
-						src={props.image}
-						alt={props.movieName}
-					/>
+					<img src={props.image} alt={props.movieName} />
 				</Link>
 				{/* </Link> */}
 			</GridCard>

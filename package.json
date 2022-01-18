@@ -1,6 +1,6 @@
 {
   "homepage": "http://kimzerovirus.github.io/movie_react_app",
-  "name": "my-app",
+  "name": "movie-react-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
