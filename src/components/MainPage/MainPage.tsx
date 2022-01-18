@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { IMAGE_BASE_URL, fetchList } from '../../api';
 
 //components
@@ -19,46 +19,70 @@ interface IState {
 }
 
 const MainPage = () => {
+	const [target, setTarget] = useState<HTMLDivElement | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
 	const [Movies, setMovies] = useState<TmdbItems[]>([]);
 	const [MainImage, setMainImage] = useState<IState>({} as IState);
-	const [CurrentPage, setCurrentPage] = useState(0);
+	const [CurrentPage, setCurrentPage] = useState(1);
 
 	useEffect(() => {
-		getMovies(1);
+		console.log(CurrentPage);
+		getMovies();
 
 		if (window.localStorage.searchItem) {
 			window.localStorage.removeItem('searchItem');
 		}
-	}, []);
+	}, [CurrentPage]);
+
+	useEffect(() => {
+		if (target) {
+			observerTrigger.observe(target);
+			// console.log(Movies.length);
+			return () => {
+				observerTrigger.unobserve(target);
+			};
+		}
+	}, [target]);
 
 	//TMDB api_call
-	const getMovies = async (cpage: number) => {
+	// const getMovies = async (cpage?: number) => {
+	// 	if (!cpage || cpage < 1) cpage = 1;
+	const getMovies = async () => {
+		setIsLoading(true);
 		try {
 			const {
 				data: { page, results },
-			} = await fetchList(cpage);
-			// console.log('page' + page, results);
+			} = await fetchList(CurrentPage);
+			console.log('page' + page, results);
 			setMovies([...Movies, ...results]);
-			if (CurrentPage === 0) {
+			if (CurrentPage === 1) {
 				setMainImage({
 					imagePath: results[0].backdrop_path,
 					title: results[0].original_title,
 					overview: results[0].overview,
 				});
 			}
-
-			setCurrentPage(page);
 		} catch (err) {
 			//Error
 			alert(`API_CALL_ERROR: ${err}`);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	//Button Event
-	const loadMore = () => {
-		getMovies(CurrentPage + 1);
-	};
+	// const loadMore = () => {
+	// 	getMovies(CurrentPage + 1);
+	// };
 
+	const observerTrigger = new IntersectionObserver(
+		(entries: IntersectionObserverEntry[]) => {
+			if (entries[0].isIntersecting) {
+				console.log('trigger');
+				setCurrentPage(page => page + 1);
+			}
+		},
+	);
 	return (
 		<Wrapper>
 			<MainMovieImage
@@ -84,12 +108,15 @@ const MainPage = () => {
 			</GridList>
 			<SearchIcon />
 
-			<footer className="center">
+			{/* <footer className="center">
 				<button onClick={loadMore} className="btn">
 					더 보기
 				</button>
-			</footer>
-			<Spinner />
+			</footer> */}
+			{/* 관찰대상 */}
+			<div ref={setTarget}>
+				<Spinner />
+			</div>
 		</Wrapper>
 	);
 };
