@@ -20,8 +20,7 @@ const App: React.FC = () => {
 
 	return (
 		<div className="App">
-			Hello world
-			<BrowserRouter>
+			<BrowserRouter basename={process.env.PUBLIC_URL}>
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/movie/:movieId" element={<DetailPage />} />
