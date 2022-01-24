@@ -26,6 +26,7 @@ const MainPage = () => {
 	const dispatch = useDispatch();
 
 	const [target, setTarget] = useState<HTMLDivElement | null>(null);
+	const [isStart, setIsStart] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [Movies, setMovies] = useState<TmdbItems[]>([]);
 	const [MainImage, setMainImage] = useState<IState>({} as IState);
@@ -43,22 +44,24 @@ const MainPage = () => {
 	}, [target]);
 
 	useEffect(() => {
-		if (CurrentPage === 1 && movieSelector.movieData.length === 0) {
+		if (isStart && CurrentPage === 1 && movieSelector.movieData.length === 0) {
 			//처음 페이지 진입
 			// console.log(CurrentPage, 'start');
-
 			dispatch(addMovieAsync(1));
 			dispatch(setCpage(1));
-		} else if (CurrentPage === 1 && movieSelector.movieData.length > 0) {
+			setIsStart(false);
+		} else if (isStart) {
 			//페이지 진입하였으나 스토어에 데이터가 있는 상태
 			// console.log(CurrentPage, 'second');
 
 			if (window.localStorage.searchItem) {
 				window.localStorage.removeItem('searchItem');
 			}
+			setIsStart(false);
 		} else if (CurrentPage > 1) {
 			//페이지 추가 호출
 			// console.log(CurrentPage, 'add');
+
 			dispatch(addMovieAsync(CurrentPage));
 			dispatch(setCpage(CurrentPage));
 		}
