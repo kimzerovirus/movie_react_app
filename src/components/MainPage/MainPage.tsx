@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { IMAGE_BASE_URL, fetchList } from '../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { addMovieAsync, setCpage, setCscroll } from '../../features/movieSlice';
 
 //components
 import GridCards from '../common/GridCards';
@@ -19,100 +22,95 @@ interface IState {
 }
 
 const MainPage = () => {
+	const movieSelector = useSelector((state: RootState) => state.movies);
+	const dispatch = useDispatch();
+
 	const [target, setTarget] = useState<HTMLDivElement | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [Movies, setMovies] = useState<TmdbItems[]>([]);
 	const [MainImage, setMainImage] = useState<IState>({} as IState);
-	const [CurrentPage, setCurrentPage] = useState(1);
-
-	useEffect(() => {
-		// console.log(CurrentPage);
-		getMovies();
-
-		if (window.localStorage.searchItem) {
-			window.localStorage.removeItem('searchItem');
-		}
-	}, [CurrentPage]);
+	const [CurrentPage, setCurrentPage] = useState(movieSelector.cpage);
 
 	useEffect(() => {
 		if (target) {
 			observerTrigger.observe(target);
 			// console.log(Movies.length);
+
 			return () => {
 				observerTrigger.unobserve(target);
 			};
 		}
 	}, [target]);
 
-	//TMDB api_call
-	// const getMovies = async (cpage?: number) => {
-	// 	if (!cpage || cpage < 1) cpage = 1;
-	const getMovies = async () => {
-		setIsLoading(true);
-		try {
-			const {
-				data: { page, results },
-			} = await fetchList(CurrentPage);
-			// console.log('page' + page, results);
-			setMovies([...Movies, ...results]);
-			if (CurrentPage === 1) {
-				setMainImage({
-					imagePath: results[0].backdrop_path,
-					title: results[0].original_title,
-					overview: results[0].overview,
-				});
-			}
-		} catch (err) {
-			//Error
-			alert(`API_CALL_ERROR: ${err}`);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	useEffect(() => {
+		if (CurrentPage === 1 && movieSelector.movieData.length === 0) {
+			//처음 페이지 진입
+			// console.log(CurrentPage, 'start');
 
-	//Button Event
-	// const loadMore = () => {
-	// 	getMovies(CurrentPage + 1);
-	// };
+			dispatch(addMovieAsync(1));
+			dispatch(setCpage(1));
+		} else if (CurrentPage === 1 && movieSelector.movieData.length > 0) {
+			//페이지 진입하였으나 스토어에 데이터가 있는 상태
+			// console.log(CurrentPage, 'second');
+
+			if (window.localStorage.searchItem) {
+				window.localStorage.removeItem('searchItem');
+			}
+		} else if (CurrentPage > 1) {
+			//페이지 추가 호출
+			// console.log(CurrentPage, 'add');
+			dispatch(addMovieAsync(CurrentPage));
+			dispatch(setCpage(CurrentPage));
+		}
+		// setMovies(movieSelector.movieData);
+		// if (!MainImage) {
+		// 	setMainImage({
+		// 		imagePath: movieSelector.movieData[0].backdrop_path,
+		// 		title: movieSelector.movieData[0].original_title,
+		// 		overview: movieSelector.movieData[0].overview,
+		// 	});
+		// }
+	}, [CurrentPage]);
 
 	const observerTrigger = new IntersectionObserver(
 		(entries: IntersectionObserverEntry[]) => {
 			if (entries[0].isIntersecting) {
-				// console.log('trigger');
-				setCurrentPage(page => page + 1);
+				if (entries[0].intersectionRatio > 0) {
+					//target 교차 횟수로 비교하는듯?
+					// console.log('trigger');
+					setCurrentPage(page => page + 1);
+				}
 			}
 		},
 	);
 	return (
 		<Wrapper>
 			<MainMovieImage
-				image={`${IMAGE_BASE_URL}w1280${MainImage.imagePath}`}
-				title={MainImage.title}
-				text={MainImage.overview}
+				image={
+					movieSelector.mainMovieData.image
+						? `${IMAGE_BASE_URL}w1280${movieSelector.mainMovieData.image}`
+						: null
+				}
+				title={movieSelector.mainMovieData.title}
+				text={movieSelector.mainMovieData.text}
 			/>
 
 			<GridList className="container">
-				{Movies &&
-					Movies.map((movie, index) => (
-						<GridCards
-							key={index}
-							image={
-								movie.poster_path
-									? `${IMAGE_BASE_URL}w500${movie.poster_path}`
-									: null
-							}
-							movieId={movie.id}
-							movieName={movie.original_title}
-						/>
-					))}
+				{movieSelector.movieData.map((movie, index) => (
+					<GridCards
+						key={index}
+						image={
+							movie.poster_path
+								? `${IMAGE_BASE_URL}w500${movie.poster_path}`
+								: null
+						}
+						movieId={movie.id}
+						movieName={movie.original_title}
+					/>
+				))}
 			</GridList>
 			<SearchIcon />
 
-			{/* <footer className="center">
-				<button onClick={loadMore} className="btn">
-					더 보기
-				</button>
-			</footer> */}
 			{/* 관찰대상 */}
 			<div ref={setTarget}>
 				<Spinner />
